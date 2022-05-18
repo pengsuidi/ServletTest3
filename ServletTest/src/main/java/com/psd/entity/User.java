@@ -3,10 +3,7 @@ package com.psd.entity;
 import java.sql.Date;
 
 public class User {
-    private Integer uid;
-    private String user_img_addr;
-    private byte[] user_img;
-    private String uname;
+    private Integer user_id;private String pay_password; private String uname;
 
     private String unickname;
 
@@ -15,6 +12,8 @@ public class User {
     private String upassword;
 
     private String ubirthday;
+    private String user_img_addr;
+    private byte[] user_img;
 
     private String uphone;
 
@@ -23,7 +22,7 @@ public class User {
     private String ucity;
 
     private String uqqnum;
-    private String pay_password;
+
     private Integer ustate;
 
     private Date createtime;
@@ -32,12 +31,83 @@ public class User {
 
     private Integer urole;
 
-    public Integer getUrole() {
-        return urole;
+    public User() {
     }
 
-    public void setUrole(Integer urole) {
+    public User(Integer user_id, String pay_password, String uname, String unickname, String usex, String upassword, String ubirthday, String user_img_addr, byte[] user_img, String uphone, String uemail, String ucity, String uqqnum, Integer ustate, Date createtime, String headimg, Integer urole) {
+        this.user_id = user_id;
+        this.pay_password = pay_password;
+        this.uname = uname;
+        this.unickname = unickname;
+        this.usex = usex;
+        this.upassword = upassword;
+        this.ubirthday = ubirthday;
+        this.user_img_addr = user_img_addr;
+        this.user_img = user_img;
+        this.uphone = uphone;
+        this.uemail = uemail;
+        this.ucity = ucity;
+        this.uqqnum = uqqnum;
+        this.ustate = ustate;
+        this.createtime = createtime;
+        this.headimg = headimg;
         this.urole = urole;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getPay_password() {
+        return pay_password;
+    }
+
+    public void setPay_password(String pay_password) {
+        this.pay_password = pay_password;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getUnickname() {
+        return unickname;
+    }
+
+    public void setUnickname(String unickname) {
+        this.unickname = unickname;
+    }
+
+    public String getUsex() {
+        return usex;
+    }
+
+    public void setUsex(String usex) {
+        this.usex = usex;
+    }
+
+    public String getUpassword() {
+        return upassword;
+    }
+
+    public void setUpassword(String upassword) {
+        this.upassword = upassword;
+    }
+
+    public String getUbirthday() {
+        return ubirthday;
+    }
+
+    public void setUbirthday(String ubirthday) {
+        this.ubirthday = ubirthday;
     }
 
     public String getUser_img_addr() {
@@ -56,120 +126,12 @@ public class User {
         this.user_img = user_img;
     }
 
-    public User(Integer uid, String user_img_addr, byte[] user_img, String uname, String unickname, String usex, String upassword, String ubirthday, String uphone, String uemail, String ucity, String uqqnum, String pay_password, Integer ustate, Date createtime, String headimg, Integer urole) {
-        this.uid = uid;
-        this.user_img_addr = user_img_addr;
-        this.user_img = user_img;
-        this.uname = uname;
-        this.unickname = unickname;
-        this.usex = usex;
-        this.upassword = upassword;
-        this.ubirthday = ubirthday;
-        this.uphone = uphone;
-        this.uemail = uemail;
-        this.ucity = ucity;
-        this.uqqnum = uqqnum;
-        this.pay_password = pay_password;
-        this.ustate = ustate;
-        this.createtime = createtime;
-        this.headimg = headimg;
-        this.urole = urole;
-    }
-
-    public String getPay_password() {
-        return pay_password;
-    }
-
-    public void setPay_password(String pay_password) {
-        this.pay_password = pay_password;
-    }
-
-    public User(Integer uid, String uname, String unickname, String usex, String upassword, String ubirthday, String uphone, String uemail, String ucity, String uqqnum, String pay_password, Integer ustate, Date createtime, String headimg, Integer urole) {
-        this.uid = uid;
-        this.uname = uname;
-        this.unickname = unickname;
-        this.usex = usex;
-        this.upassword = upassword;
-        this.ubirthday = ubirthday;
-        this.uphone = uphone;
-        this.uemail = uemail;
-        this.ucity = ucity;
-        this.uqqnum = uqqnum;
-        this.pay_password = pay_password;
-        this.ustate = ustate;
-        this.createtime = createtime;
-        this.headimg = headimg;
-        this.urole = urole;
-    }
-
-    public User() {
-    }
-
-    public User(String uname, String upassword) {
-        this.uname = uname;
-        this.upassword = upassword;
-    }
-
-    public User(Integer uid, String uname, String upassword) {
-        this.uid = uid;
-        this.uname = uname;
-        this.upassword = upassword;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname == null ? null : uname.trim();
-    }
-
-    public String getUnickname() {
-        return unickname;
-    }
-
-    public void setUnickname(String unickname) {
-        this.unickname = unickname == null ? null : unickname.trim();
-    }
-
-    public String getUsex() {
-        return usex;
-    }
-
-    public void setUsex(String usex) {
-        this.usex = usex == null ? null : usex.trim();
-    }
-
-    public String getUpassword() {
-        return upassword;
-    }
-
-    public void setUpassword(String upassword) {
-        this.upassword = upassword == null ? null : upassword.trim();
-    }
-
-    public String getUbirthday() {
-        return ubirthday;
-    }
-
-    public void setUbirthday(String ubirthday) {
-        this.ubirthday = ubirthday;
-    }
-
     public String getUphone() {
         return uphone;
     }
 
     public void setUphone(String uphone) {
-        this.uphone = uphone == null ? null : uphone.trim();
+        this.uphone = uphone;
     }
 
     public String getUemail() {
@@ -177,7 +139,7 @@ public class User {
     }
 
     public void setUemail(String uemail) {
-        this.uemail = uemail == null ? null : uemail.trim();
+        this.uemail = uemail;
     }
 
     public String getUcity() {
@@ -185,7 +147,7 @@ public class User {
     }
 
     public void setUcity(String ucity) {
-        this.ucity = ucity == null ? null : ucity.trim();
+        this.ucity = ucity;
     }
 
     public String getUqqnum() {
@@ -193,7 +155,7 @@ public class User {
     }
 
     public void setUqqnum(String uqqnum) {
-        this.uqqnum = uqqnum == null ? null : uqqnum.trim();
+        this.uqqnum = uqqnum;
     }
 
     public Integer getUstate() {
@@ -217,25 +179,14 @@ public class User {
     }
 
     public void setHeadimg(String headimg) {
-        this.headimg = headimg == null ? null : headimg.trim();
+        this.headimg = headimg;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", uname='" + uname + '\'' +
-                ", unickname='" + unickname + '\'' +
-                ", usex='" + usex + '\'' +
-                ", upassword='" + upassword + '\'' +
-                ", ubirthday=" + ubirthday +
-                ", uphone='" + uphone + '\'' +
-                ", uemail='" + uemail + '\'' +
-                ", ucity='" + ucity + '\'' +
-                ", uqqnum='" + uqqnum + '\'' +
-                ", ustate=" + ustate +
-                ", createtime=" + createtime +
-                ", headimg='" + headimg + '\'' +
-                '}';
+    public Integer getUrole() {
+        return urole;
+    }
+
+    public void setUrole(Integer urole) {
+        this.urole = urole;
     }
 }

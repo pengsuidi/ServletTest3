@@ -46,7 +46,7 @@ public class GetRandomShopServlet extends HttpServlet {
             }
 
 
-            if (shopinfolist == null) {
+            if (shopinfolist.size()==0) {
 
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             } else {
@@ -56,9 +56,11 @@ public class GetRandomShopServlet extends HttpServlet {
                 result.setCode(Config.STATUS_SUCCESS);
                 result.setMessage("成功!!");
                 for (int i = 0; i < shopinfolist.size(); i++) {
-                    shopinfolist.get(i).setShop_image(image2byte(shopinfolist.get(i).getShop_image_addr()));
+                    shopinfolist.get(i).setShop_image(image2byte(shopinfolist.get(i).getShop_img_addr()));
 
                 }
+                //Shop_Info tmp_shop=new UserDao().GetShopInfoByShopid("1");
+                //result.setData(tmp_shop);
                 result.setData(shopinfolist);
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             }

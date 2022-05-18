@@ -2,6 +2,7 @@ package com.psd.servlet;
 
 import com.alibaba.fastjson.JSONObject;
 import com.psd.dao.UserDao;
+import com.psd.entity.User;
 import com.psd.entity.UserComment;
 import com.psd.entity.Result;
 import com.psd.util.Config;
@@ -29,16 +30,20 @@ public class GetCommentServlet extends HttpServlet {
         String shopid = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
         System.out.println("---------:"+shopid);
         try {
-            UserDao commentDao = new UserDao();
-            List<UserComment> comments = commentDao.selectCommentList(shopid);
+            UserDao Dao = new UserDao();
+            List<UserComment> comments = Dao.selectCommentList(shopid);
 
             result.setCode(Config.STATUS_SUCCESS);
             result.setMessage("网络请求成功:"+comments.size());
             for (int i=0;i<comments.size();i++)
             {
-                if (comments.get(i).getComment_img_addr()!=null)
+                UserComment comment=comments.get(i);
+                if (comment.getComment_img_addr()!=null)
                 {
-                    comments.get(i).setComment_img(image2byte(comments.get(i).getComment_img_addr()));
+                    comment.setComment_img(image2byte(comments.get(i).getComment_img_addr()));
+                    //获取用户信息
+                    User user=Dao.GetUserImg(comment.getUser_id().toString());
+                    comment.setUser_pic(image2byte(user.getUser_img_addr()));
                 }
 
             }

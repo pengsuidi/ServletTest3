@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * MySQL JDBC 操作工具类，封装 MySQL 操作的增删改查及其他方法
  * <p>
@@ -16,23 +15,23 @@ import java.util.List;
  * 6.关闭 Statement、Connection
  */
 public class JDBCUtil {
-
     public JDBCUtil() throws ClassNotFoundException {
         Class.forName(Config.JDBC_DRIVER);
     }
-
-    private Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException
+    {
         return DriverManager.getConnection(Config.JDBC_URL, Config.JDBC_USER, Config.JDBC_PASSWORD);
     }
 
-
-    /**
+    /*
+     *
      * 增删改 的共性操作
      *
      * @param sql     要操作的 SQL 语句
      * @param objects 预编译的 SQL 语句中的占位符填充元素
      * @return
      */
+
     public boolean execute(String sql, Object... objects) {
         try (Connection connection = getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -40,11 +39,9 @@ public class JDBCUtil {
                 for (int i = 0; i < objects.length; i++) {
                     preparedStatement.setObject(i + 1, objects[i]);
                 }
-                System.err.println("1232123");
                 return preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
-            System.err.println("asdasdasd");
             e.printStackTrace();
             return false;
         }
@@ -94,7 +91,6 @@ public class JDBCUtil {
             return false;
         }
     }
-
     // select * from muser where uname=? and upassword=?
     // select * from tmovies where mid=?
     public <T> T selectOne(Class<T> clazz, String sql, Object... objects) {
@@ -136,7 +132,6 @@ public class JDBCUtil {
                 //解析数据，并填充对象
                 while (resultSet.next()) {
                     T t = getT(clazz, resultSet);
-
                     list.add(t);
                 }
                 return list;
@@ -156,6 +151,7 @@ public class JDBCUtil {
      * @param <T>
      * @return
      */
+
     public <T> T getT(Class<T> clazz, ResultSet resultSet) throws IllegalAccessException, InstantiationException, SQLException, NoSuchFieldException {
         //获取 T 对应的对象；实例化对象 T
         T t = clazz.newInstance();

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 
-@WebServlet("/UPLOAD_ShopInfo")
+@WebServlet("/UploadShopServlet")
 public class UploadShopInfoServlet extends HttpServlet {
     private String FOLDER = "/root/img/";
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +51,7 @@ public class UploadShopInfoServlet extends HttpServlet {
             }
 
 
-            boolean isUpdate = new UserDao().Update_shop_info(shop_name,shop_img_addr,user_id,shop_type);
+            boolean isUpdate = new UserDao().Update_shop(shop_name,shop_img_addr,user_id,shop_type);
 
             if (isUpdate) {
                 result.setCode(Config.STATUS_SUCCESS);
@@ -107,8 +107,6 @@ public class UploadShopInfoServlet extends HttpServlet {
         FileOutputStream output = null;
         File file = new File(FOLDER + name + ".jpg");
         try {
-
-
             byte[] bytes1 = Base64.decode(head_photo);
             output = new FileOutputStream(file);
 

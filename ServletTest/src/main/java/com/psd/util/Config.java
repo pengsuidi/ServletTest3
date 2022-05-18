@@ -2,13 +2,13 @@ package com.psd.util;
 
 public class Config {
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-//    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
-// ////   public static final String JDBC_URL = "jdbc:mysql://140.143.38.249:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
-    public static final String JDBC_URL = "jdbc:mysql://106.54.87.185:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
+    //public static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
+ public static final String JDBC_URL = "jdbc:mysql://42.193.105.80:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
+    //public static final String JDBC_URL = "jdbc:mysql://106.54.87.185:3306/mydatabase?useUnicode=true&characterEncoding=UTF-8";
 //
-    public static final String JDBC_USER = "psd";
-//    public static final String JDBC_USER = "root";
-    public static final String JDBC_PASSWORD = "barrett";
+   //public static final String JDBC_USER = "psd";
+    public static final String JDBC_USER = "root";
+    public static final String JDBC_PASSWORD = "123456";//数据库的密码
 //    public static final String JDBC_PASSWORD = "barrett";
 
     public static final int STATUS_UPLOAD_FAVOURITE_SUCCESS = 101;
@@ -16,10 +16,12 @@ public class Config {
     public static final int STATUS_ERROR = -1;
     public static final int STATUS_FAILURE = 0;
     public static final int STATUS_SUCCESS = 200;
-    public static final int STATUS_FAVOURITE_SUCCESS = 100;
+    public static final int STATUS_FAVOURITE_SUCCESS = 200;
     public static final int STATUS_NOT_FOUND = 123;
     //请求参数名常量
     public static final String REQUEST_PARAMETER_COMMENT_ADDR = "comment_addr";
+    public static final String REQUEST_PARAMETER_COMMENT_ID ="comment_id";
+
     public static final String REQUEST_PARAMETER_SOCKET_ID ="socket_id";
     public static final String REQUEST_PARAMETER_SOCKET_REMARK ="socket_remark";
     public static final String REQUEST_PARAMETER_SOCKET_IMAGE64 ="socket_image64";
@@ -65,6 +67,8 @@ public class Config {
     public static final String REQUEST_VALUE_METHOD_ONE = "one";
     public static final String REQUEST_PARAMETER_COMMENT = "comment";
     public static final String REQUEST_PARAMETER_USER_ID = "userid";
+    public static final String REQUEST_PARAMETER_FOOD_ID_STRING ="food_id_string";
+
 
     //请求参数值常量
 

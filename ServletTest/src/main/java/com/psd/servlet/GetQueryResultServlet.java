@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 /**
  * 登陆接口定义类
@@ -34,6 +34,8 @@ public class GetQueryResultServlet extends HttpServlet {
 
             //获取参数
             String queryString = req.getParameter(Config.REQUEST_QUERY_STRING);
+            String queryString123 = queryString;
+
 
             System.out.println(queryString);
             //检测数据是否异常
@@ -41,18 +43,34 @@ public class GetQueryResultServlet extends HttpServlet {
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
                 return;
             }
-            List<Shop_Info> ShopInfoList = new UserDao().GetShopListByName(queryString);
+            List<Shop_Info> ShopInfoList = new ArrayList<>();
+            ShopInfoList.addAll(new UserDao().GetShopListByName_right(queryString));
+            ShopInfoList.addAll(new UserDao().GetShopListByName(queryString));
 
-            if (ShopInfoList == null) {
+            //循环查询
+//            while(queryString.length()>0)
+//            {
+//                //ShopInfoList.addAll(new UserDao().GetShopListByName(queryString));
+//
+//                ShopInfoList.addAll(new UserDao().GetShopListByName_right(queryString));
+//               // ShopInfoList.addAll(new UserDao().GetShopListByName_right_left(queryString));
+//                queryString= queryString.substring(0,queryString.length()-1);
+//            }
+            String shop_name="店名";
+            String sql="select * from shop where shop_name like "+"'"+shop_name+"%"+"'";
+
+            if (ShopInfoList.size()==0) {
+                result.setCode(Config.STATUS_FAILURE);
+                result.setMessage("失败1:"+sql);
 
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             } else {
                 //TODO 返回响应：登陆成功；保存用户信息
                 result.setCode(Config.STATUS_SUCCESS);
-                result.setMessage("成功!!");
+                result.setMessage("成功!!:"+queryString123.length());
                 for(int i=0;i<ShopInfoList.size();i++)
                 {
-                    ShopInfoList.get(i).setShop_image(image2byte(ShopInfoList.get(i).getShop_image_addr()));
+                    //ShopInfoList.get(i).setShop_image(image2byte(ShopInfoList.get(i).getShop_img_addr()));
                 }
 
                 result.setData(ShopInfoList);
@@ -92,5 +110,16 @@ public class GetQueryResultServlet extends HttpServlet {
             ex1.printStackTrace();
         }
         return data;
+    }
+
+    public static List<String> duplicateListyByIte(List<String> ShopIdlist) {
+        Set set = new HashSet();
+        List newList = new ArrayList();
+        for (Iterator iter = ShopIdlist.iterator(); iter.hasNext();) {
+            Object element = iter.next();
+            if (set.add(element))
+                newList.add(element);
+        }
+        return newList;
     }
 }

@@ -3,6 +3,7 @@ package com.psd.servlet;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.psd.dao.UserDao;
 import com.psd.entity.Result;
 import com.psd.util.Config;
 
@@ -21,8 +22,8 @@ public class DeleteCommentServlet extends HttpServlet {
             throws ServletException, IOException {
         Result result = new Result();
         //获取参数
-        String comment_addr = req.getParameter(Config.REQUEST_PARAMETER_COMMENT_ADDR);
-        if (comment_addr == null || comment_addr.trim().length() == 0 ) {
+        String comment_id = req.getParameter(Config.REQUEST_PARAMETER_COMMENT_ID);
+        if (comment_id == null || comment_id.trim().length() == 0 ) {
             result.setCode(Config.STATUS_ERROR);
             result.setMessage("地址为空");
             //TODO 将响应规范对象 转换为 JSON 格式字符串回传；在客户端解析 JSON 格式字符串，并构建实体对象
@@ -31,7 +32,8 @@ public class DeleteCommentServlet extends HttpServlet {
             return;
         }
         boolean isMinus=true;
-//            boolean isMinus= new UserDao().deleteComment(comment_addr);
+//        boolean isMinus= false;
+        //            isMinus = new UserDao().deleteComment(comment_id);
         if (isMinus)
         {
             result.setCode(Config.STATUS_SUCCESS);

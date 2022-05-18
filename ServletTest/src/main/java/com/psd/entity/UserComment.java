@@ -1,33 +1,31 @@
 package com.psd.entity;
 
 public class UserComment {
-    private String shop_id;
+    private Integer shop_id;
+    private Integer comment_id;
     private byte[] comment_img;
     private String comment_img_addr;
 
-    private String new_comment;
-    private  String user_id;
-    private  String grade;
+    private String comment;
+    private  Integer user_id;
+    private  Float comment_grade;
     private  String user_pic_addr;
     private  byte[] user_pic;
 
-    public UserComment(String shop_id, byte[] comment_img, String comment_img_addr, String new_comment, String user_id, String grade, String user_pic_addr, byte[] user_pic) {
-        this.shop_id = shop_id;
-        this.comment_img = comment_img;
-        this.comment_img_addr = comment_img_addr;
-        this.new_comment = new_comment;
-        this.user_id = user_id;
-        this.grade = grade;
-        this.user_pic_addr = user_pic_addr;
-        this.user_pic = user_pic;
-    }
-
-    public String getShop_id() {
+    public Integer getShop_id() {
         return shop_id;
     }
 
-    public void setShop_id(String shop_id) {
+    public void setShop_id(Integer shop_id) {
         this.shop_id = shop_id;
+    }
+
+    public Integer getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(Integer comment_id) {
+        this.comment_id = comment_id;
     }
 
     public byte[] getComment_img() {
@@ -46,28 +44,28 @@ public class UserComment {
         this.comment_img_addr = comment_img_addr;
     }
 
-    public String getNew_comment() {
-        return new_comment;
+    public String getComment() {
+        return comment;
     }
 
-    public void setNew_comment(String new_comment) {
-        this.new_comment = new_comment;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
-    public String getGrade() {
-        return grade;
+    public Float getComment_grade() {
+        return comment_grade;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setComment_grade(Float comment_grade) {
+        this.comment_grade = comment_grade;
     }
 
     public String getUser_pic_addr() {
@@ -83,6 +81,18 @@ public class UserComment {
     }
 
     public void setUser_pic(byte[] user_pic) {
+        this.user_pic = user_pic;
+    }
+
+    public UserComment(Integer shop_id, Integer comment_id, byte[] comment_img, String comment_img_addr, String comment, Integer user_id, Float comment_grade, String user_pic_addr, byte[] user_pic) {
+        this.shop_id = shop_id;
+        this.comment_id = comment_id;
+        this.comment_img = comment_img;
+        this.comment_img_addr = comment_img_addr;
+        this.comment = comment;
+        this.user_id = user_id;
+        this.comment_grade = comment_grade;
+        this.user_pic_addr = user_pic_addr;
         this.user_pic = user_pic;
     }
 

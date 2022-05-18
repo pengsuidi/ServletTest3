@@ -32,7 +32,7 @@ public class UploadUserImgServlet extends HttpServlet {
 
             String user_img_addr=null;
 
-            String name = "userimg:"+"_" + userid  + "_" + System.currentTimeMillis();
+            String name = "userimg"+"_" + userid  + "_" + System.currentTimeMillis();
             String path =FOLDER; //所创建文件目录
             File f = new File(path);
             if(!f.exists()){

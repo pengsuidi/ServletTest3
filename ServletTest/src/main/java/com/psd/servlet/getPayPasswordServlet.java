@@ -36,7 +36,6 @@ public class getPayPasswordServlet extends HttpServlet {
                 result.setMessage("获得失败");
                 result.setData(buyer);
             }
-
             System.out.println("abc:"+JSONObject.toJSONString(result));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

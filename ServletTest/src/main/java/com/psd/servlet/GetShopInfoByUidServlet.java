@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 登陆接口定义类
  */
-@WebServlet("/GetShopInfoByUid")
+@WebServlet("/GetShopInfoByUserIDServlet")
 public class GetShopInfoByUidServlet extends HttpServlet {
 
     @Override
@@ -52,7 +52,7 @@ public class GetShopInfoByUidServlet extends HttpServlet {
                 result.setMessage("成功!!");
                 for(int i=0;i<shopList.size();i++)
                 {
-                    shopList.get(i).setShop_image(image2byte(shopList.get(i).getShop_image_addr()));
+                    shopList.get(i).setShop_image(image2byte(shopList.get(i).getShop_img_addr()));
                 }
 
                 result.setData(shopList);

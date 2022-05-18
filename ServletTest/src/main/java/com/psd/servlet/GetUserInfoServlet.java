@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
-@WebServlet("/GetUserInfo")
+@WebServlet("/GetUserInfoServlet")
 public class GetUserInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -22,20 +22,16 @@ public class GetUserInfoServlet extends HttpServlet {
         try {
             Result result = new Result();
             System.out.println("在此处处理 LoginServlet 的 GET/POST 请求");
-
             //获取参数
             String id = req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
-
             if (id == null || id.trim().length() == 0 ) {
                 result.setCode(Config.STATUS_ERROR);
                 result.setMessage("用户名或密码为空");
-
                 //TODO 将响应规范对象 转换为 JSON 格式字符串回传；在客户端解析 JSON 格式字符串，并构建实体对象
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
                 resp.getWriter().write(JSONObject.toJSONString(result));
                 return;
             }
-
             User user = new UserDao().GetUserInfo(id);
             if (user!=null) {
                 result.setCode(Config.STATUS_SUCCESS);

@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-@WebServlet("/register")
+@WebServlet("/registerServlet")
 public class RegisterServlet extends HttpServlet {
     private String FOLDER = "/root/UserImg/";
     @Override
@@ -26,6 +28,7 @@ public class RegisterServlet extends HttpServlet {
             Result result = new Result();
             System.out.println("在此处处理 LoginServlet 的 GET/POST 请求");
 
+            String req_time= String.valueOf(System.currentTimeMillis());
             //获取参数
             String uname = req.getParameter(Config.REQUEST_PARAMETER_USERNAME);
             String unickname = req.getParameter(Config.REQUEST_PARAMETER_NICKNAME);
@@ -48,11 +51,7 @@ public class RegisterServlet extends HttpServlet {
                 f.mkdirs(); //创建目录
             }
             savePicture(img64,name);
-
-
             String user_img_addr = FOLDER + name + ".jpg";
-
-
             User user = new User();
 
             user.setUname(uname);
@@ -62,7 +61,8 @@ public class RegisterServlet extends HttpServlet {
             boolean isRegistered = new UserDao().register(user);
             if (isRegistered) {
                 result.setCode(Config.STATUS_SUCCESS);
-                result.setMessage("注册成功");
+                String resp_time=String.valueOf(System.currentTimeMillis());
+                result.setMessage("接收请求时间："+req_time+"  "+"响应时间："+resp_time);
 
                 //TODO 返回响应：注册成功
                 System.out.println("JSON -> " + JSONObject.toJSONString(result));

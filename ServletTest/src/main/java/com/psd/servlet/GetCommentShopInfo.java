@@ -22,47 +22,34 @@ import java.io.IOException;
  */
 @WebServlet("/CommentShopInfo")
 public class GetCommentShopInfo extends HttpServlet {
-
+//根据shopid返回该店铺的所有评论
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        try {
-            Result result = new Result();
-
+        try { Result result = new Result();
             System.out.println("在此处处理 LoginServlet 的 GET/POST 请求");
-
             //获取参数
             String shopid = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
-
-            System.out.println("shopid:"+shopid);
             //检测数据是否异常
             if (shopid == null || shopid.trim().length() == 0) {
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
                 return;
             }
             ShopInfoBuy shop = new UserDao().getCommentShopInfo(shopid);
-
             if (shop == null) {
-
+                result.setCode(Config.STATUS_FAILURE);
+                result.setMessage("没有!!");
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             } else {
                 //TODO 返回响应：登陆成功；保存用户信息
                 req.getSession().setAttribute("user", shop);
-
                 result.setCode(Config.STATUS_SUCCESS);
                 result.setMessage("成功!!");
                 result.setData(shop);
-
-
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             }
-
             resp.getWriter().write(JSONObject.toJSONString(result));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
+        } catch (ClassNotFoundException e) { e.printStackTrace(); } }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

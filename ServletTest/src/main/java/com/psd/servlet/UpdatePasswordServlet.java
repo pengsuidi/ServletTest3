@@ -40,7 +40,7 @@ public class UpdatePasswordServlet extends HttpServlet {
             }
             User user = new User();
 
-            user.setUid(Integer.parseInt(uid));
+            user.setUser_id(Integer.parseInt(uid));
             user.setUpassword(upassword);
 
             boolean isUpdate = new UserDao().updatePassword(user);

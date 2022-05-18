@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 
-@WebServlet("/UPLOAD_FOOD_MENU")
+@WebServlet("/UploadFoodServlet")
 public class UploadFoodMenuServlet extends HttpServlet {
     private String FOLDER = "/root/FoodImg/";
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

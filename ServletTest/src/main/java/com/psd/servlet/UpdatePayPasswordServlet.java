@@ -40,7 +40,7 @@ public class UpdatePayPasswordServlet extends HttpServlet {
             }
            User buyer = new User();
 
-            buyer.setUid(Integer.parseInt(uid));
+            buyer.setUser_id(Integer.parseInt(uid));
             buyer.setPay_password(upassword);
             boolean isUpdate = new UserDao().updatePayPassword(buyer);
 

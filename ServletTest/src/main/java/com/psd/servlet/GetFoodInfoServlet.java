@@ -20,27 +20,32 @@ import java.util.List;
 
 @WebServlet("/GetFoodInfoServlet")
 public class GetFoodInfoServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Result result = new Result();
-
-        String shopid = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
-
+        Result result = new Result();//存储数据
+        String shopid = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);//获取参数
         try {
             UserDao foodDao = new UserDao();
-
-
             List<Food_Menu> foodMenuList = foodDao.selectList(shopid);
 
-            result.setCode(Config.STATUS_SUCCESS);
-            result.setMessage("网络请求成功");
-            for(int i=0;i<foodMenuList.size();i++)
+            if(foodMenuList.size()==0)
             {
-                foodMenuList.get(i).setFood_image(image2byte(foodMenuList.get(i).getFood_image_addr()));
+                result.setCode(Config.STATUS_FAILURE);
+                result.setMessage("网络请求成功");
+                result.setData("没找到");
+            }else{
+
+                for(int i=0;i<foodMenuList.size();i++)
+                {
+                    foodMenuList.get(i).setFood_image(image2byte(foodMenuList.get(i).getFood_img_addr()));
+                }
+                result.setData(foodMenuList);
+                result.setCode(Config.STATUS_SUCCESS);
+                result.setMessage("网络请求成功");
+
             }
-            result.setData(foodMenuList);
+
             System.out.println("result:----"+JSONObject.toJSONString(result));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

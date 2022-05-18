@@ -43,20 +43,18 @@ public class GetShopInfoByShopidServlet extends HttpServlet {
             Shop_Info shopinfo = new UserDao().GetShopInfoByShopid(shopid);
 
             if (shopinfo == null) {
-
-                System.err.println("JSON -> " + JSONObject.toJSONString(result));
+                result.setCode(Config.STATUS_FAILURE);
+                result.setMessage("为空!!"+"图片地址："+shopinfo.getShop_img_addr());
+                System.err.println("ERRO:JSON -> " + JSONObject.toJSONString(result));
             } else {
                 //TODO 返回响应：登陆成功；保存用户信息
                 req.getSession().setAttribute("user", shopinfo);
-
-
                 result.setCode(Config.STATUS_SUCCESS);
                 result.setMessage("成功!!");
-                shopinfo.setShop_image(image2byte(shopinfo.getShop_image_addr()));
+                shopinfo.setShop_image(image2byte(shopinfo.getShop_img_addr()));
                 result.setData(shopinfo);
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             }
-
             resp.getWriter().write(JSONObject.toJSONString(result));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

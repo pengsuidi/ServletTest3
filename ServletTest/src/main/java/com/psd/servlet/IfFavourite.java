@@ -44,13 +44,13 @@ public class IfFavourite extends HttpServlet {
             FavouriteShop favouriteShop = new UserDao().isFavourite(shopid,user_id);
 
             if (favouriteShop == null) {
-                result.setCode(Config.STATUS_FAVOURITE_SUCCESS);
-                result.setMessage("失败");
+                result.setCode(Config.STATUS_FAILURE);
+                result.setMessage("未收藏");
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             } else {
                 //TODO 返回响应：登陆成功；保存用户信息
                 result.setCode(Config.STATUS_FAVOURITE_SUCCESS);
-                result.setMessage("成功");
+                result.setMessage("收藏");
 
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             }

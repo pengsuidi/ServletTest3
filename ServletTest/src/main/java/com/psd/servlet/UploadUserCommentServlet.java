@@ -21,11 +21,9 @@ import java.util.List;
 /**
  * 登陆接口定义类
  */
-@WebServlet("/UserCommentServlet")
+@WebServlet("/UpdateUserCommentServlet")
 public class UploadUserCommentServlet extends HttpServlet {
     private String FOLDER = "/root/CommentImg/";
-//    private String FOLDER = "C:\\Users\\Administrator\\Desktop\\pic\\";
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -37,20 +35,19 @@ public class UploadUserCommentServlet extends HttpServlet {
             //获取参数
             String img64 = req.getParameter(Config.REQUEST_PARAMETER_CommentIMG_BASE64);
             System.out.println("img64:"+img64);
-            String shopid = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
-            String userid = req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
+            String shop_id = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
+            String user_id = req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
             String comment = req.getParameter(Config.REQUEST_PARAMETER_COMMENT);
             String grade = req.getParameter(Config.REQUEST_PARAMETER_GRADE);
             //String user_pic_addr = req.getParameter(Config.REQUEST_PARAMETER_USER_PIC_ADDR);
             //String user_pic = req.getParameter(Config.REQUEST_PARAMETER_USER_PIC);
             String user_pic = null;
-            String user_pic_addr = null;
+
             //把image_64转化为图片保存在文件夹中,把路径保存在数据库中;
             //对二进制数组进行编码
 
-            String name = "_" + shopid + "_" + userid + "_" + System.currentTimeMillis();
+            String name = "_" + shop_id + "_" + user_id + "_" + System.currentTimeMillis();
             String comment_img_addr;
-            String comment_img = null;
             String path =FOLDER; //所创建文件目录
             File f = new File(path);
             if(!f.exists()){
@@ -67,10 +64,7 @@ public class UploadUserCommentServlet extends HttpServlet {
                 System.out.println("有图片!");
             }
 
-            System.out.println("!!path:" + user_pic_addr);
-
-            boolean isUpload = new UserDao().upload_comment(grade, user_pic_addr, user_pic, shopid, userid, comment,comment_img,comment_img_addr);
-            System.out.println(shopid + isUpload + "asd" + isUpload);
+            boolean isUpload = new UserDao().upload_comment(comment, shop_id, user_id, grade, comment_img_addr);
 
             //检测数据是否异常
             if (isUpload) {
@@ -85,16 +79,17 @@ public class UploadUserCommentServlet extends HttpServlet {
                 //TODO 返回响应：注册失败
                 System.err.println("zxczxcJSON -> " + JSONObject.toJSONString(result));
             }
-            //更新shop_info里面的
+            //更新shop_info里面的店铺评分
             UserDao commentDao = new UserDao();
-            List<UserComment> comments = commentDao.selectCommentList(shopid);
+            List<UserComment> Allcomments = commentDao.selectCommentList(shop_id);
             Float new_grade=0.0f;
-            for(int i=0;i<comments.size();i++)
+            for(int i = 0; i< Allcomments.size(); i++)
             {
-                new_grade+=Float.parseFloat(comments.get(i).getGrade());
+                new_grade+= Allcomments.get(i).getComment_grade();
             }
-            new_grade/=comments.size();
-            Boolean isupdate=commentDao.Update_shop_grade(shopid,new_grade.toString());
+            new_grade/= Allcomments.size();
+            commentDao.Update_shop_grade(shop_id,new_grade.toString());
+            result.setData(new_grade);
             resp.getWriter().write(JSONObject.toJSONString(result));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -131,23 +126,15 @@ public class UploadUserCommentServlet extends HttpServlet {
         return data;
     }
 
-    public void savePicture(String head_photo, String name) {
-//        BASE64Decoder decoder = new BASE64Decoder();
-
+    public void savePicture(String photo, String name) {
         FileOutputStream output = null;
         File file = new File(FOLDER + name + ".jpg");
         try {
-
-
-            byte[] bytes1 = Base64.decode(head_photo);
+            byte[] bytes1 = Base64.decode(photo);
             output = new FileOutputStream(file);
-
-
             for (int i = 0; i < bytes1.length; i++) {
                 output.write(bytes1[i]);
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

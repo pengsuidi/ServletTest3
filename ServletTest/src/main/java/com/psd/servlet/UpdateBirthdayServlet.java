@@ -42,7 +42,7 @@ public class UpdateBirthdayServlet extends HttpServlet {
             User user = new User();
             SimpleDateFormat ft=new SimpleDateFormat(ubirthday);
 
-            user.setUid(Integer.parseInt(uid));
+            user.setUser_id(Integer.parseInt(uid));
 
             boolean isUpdate = new UserDao().updateBirthday(uid,ubirthday);
             if (isUpdate) {

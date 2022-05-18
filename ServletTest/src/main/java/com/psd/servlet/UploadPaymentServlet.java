@@ -3,6 +3,7 @@ package com.psd.servlet;
 import com.alibaba.fastjson.JSONObject;
 import com.psd.dao.UserDao;
 import com.psd.entity.Result;
+import com.psd.entity.TotalOid;
 import com.psd.util.Config;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet("/UploadPaymentServlet")
@@ -24,30 +26,27 @@ public class UploadPaymentServlet extends HttpServlet {
 
             System.out.println("在此处处理 UpdateServlet 的 GET/POST 请求");
 
-            String food_name=req.getParameter(Config.REQUEST_PARAMETER_FOOD_NAME);
-            String shop_name=req.getParameter(Config.REQUEST_PARAMETER_SHOPNAME);
-            String food_price=req.getParameter(Config.REQUEST_PARAMETER_FOOD_PRICE);
             String total_price=req.getParameter(Config.REQUEST_PARAMETER_TOTAL_PRICE);
-            String oid=req.getParameter(Config.REQUEST_PARAMETER_OID);
             String user_id=req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
-            String shop_id=req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
+            String food_id_string=req.getParameter(Config.REQUEST_PARAMETER_FOOD_ID_STRING);
+            int LastOid;
 
-
-            boolean isUpdate = new UserDao().updatePayment(food_name,food_price,total_price,oid,user_id,shop_id,shop_name);
+            boolean isUpdate = new UserDao().updatePayment(total_price,user_id);
             if (isUpdate) {
                 result.setCode(Config.STATUS_SUCCESS);
-                result.setMessage("更新payment成功");
-                // System.out.println("User:" + user.toString());
-                // System.err.println("修改成功");
-                //TODO 返回响应：注册成功
-                System.out.println("JSON -> " + JSONObject.toJSONString(result));
+                List<TotalOid> list=new UserDao().GetOIDLIST();
+                result.setMessage(food_id_string);
+                result.setData(list.get(list.size()-1).getOid());
+                LastOid=list.get(list.size()-1).getOid();
+                //更新FK_payment_food表
+                String[] res=update_FK_payment_food(food_id_string,LastOid);
 
-                // resp.getWriter().write("修改成功");
+                result.setData(res[res.length-1]);
             } else {
                 // System.err.println("修改失败");
                 result.setCode(Config.STATUS_FAILURE);
                 result.setMessage("更新payment失败");
-                result.setData(food_name+food_price+total_price+oid+user_id+shop_id);
+                result.setData(total_price+user_id);
                 //TODO 返回响应：注册失败
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
                 // resp.getWriter().write("修改失败");
@@ -58,6 +57,20 @@ public class UploadPaymentServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+    }
+
+    private String[] update_FK_payment_food(String food_id_string,int LastOid) {
+        //解析food_id_string
+        String food_id[]= food_id_string.split(",");
+        for(int i=0;i<food_id.length;i++)
+        {
+            try {
+                boolean res=new UserDao().update_FK_payment_food(food_id[i],LastOid);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+            return food_id;
     }
 
     @Override

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/uploadFavourite")
+@WebServlet("/uploadFavouriteServlet")
 public class uploadFavouriteServlet extends HttpServlet {
 
     @Override
@@ -23,7 +23,6 @@ public class uploadFavouriteServlet extends HttpServlet {
             //获取参数
             String shop_id = req.getParameter(Config.REQUEST_PARAMETER_SHOPID);
             String user_id = req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
-            String shop_name = req.getParameter(Config.REQUEST_PARAMETER_SHOPNAME);
             if (shop_id == null || shop_id.trim().length() == 0 ) {
                 result.setCode(Config.STATUS_ERROR);
                 result.setMessage("用户名或密码为空");
@@ -33,7 +32,7 @@ public class uploadFavouriteServlet extends HttpServlet {
                 return;
             }
 
-            boolean isFavourite= new UserDao().uploadFavouriteShop(shop_id,shop_name,user_id);
+            boolean isFavourite= new UserDao().uploadFavouriteShop(shop_id,user_id);
             if (isFavourite)
             {
                 result.setCode(Config.STATUS_UPLOAD_FAVOURITE_SUCCESS);
@@ -43,7 +42,6 @@ public class uploadFavouriteServlet extends HttpServlet {
             } else {
                 result.setCode(Config.STATUS_FAILURE);
                 result.setMessage("收藏失败");
-
                 //TODO 返回响应：注册失败
                 System.err.println("JSON -> " + JSONObject.toJSONString(result));
             }
