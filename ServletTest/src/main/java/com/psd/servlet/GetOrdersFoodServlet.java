@@ -23,7 +23,7 @@ public class GetOrdersFoodServlet extends HttpServlet {
 
         String userid = req.getParameter(Config.REQUEST_PARAMETER_USER_ID);
         String oid = req.getParameter(Config.REQUEST_PARAMETER_OID);
-
+//
         System.out.println("---------oid:"+oid);
         try {
             UserDao OrdersDao = new UserDao();
